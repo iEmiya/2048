@@ -486,7 +486,7 @@ hr {
   line-height: 42px;
   margin-bottom: 0; }
 
-.restart-button {
+.next-move-button, .finish-game-button, .restart-button {
   display: inline-block;
   background: #8f7a66;
   border-radius: 3px;
@@ -495,9 +495,16 @@ hr {
   color: #f9f6f2;
   height: 40px;
   line-height: 42px;
+  margin-left: 20px;
   display: block;
   text-align: center;
   float: right; }
+
+.playing .disabled-when-playing {
+  background: rgba(143, 122, 102, 0.19); }
+
+.finish-game-button {
+  width: 60px; }
 
 .game-explanation {
   margin-top: 50px; }

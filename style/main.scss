@@ -461,11 +461,20 @@ hr {
   margin-bottom: 0;
 }
 
-.restart-button {
+.next-move-button, .finish-game-button, .restart-button {
   @include button;
+  margin-left: 20px;
   display: block;
   text-align: center;
   float: right;
+}
+
+.playing .disabled-when-playing {
+  background: rgba(143, 122, 102, 0.19);
+}
+
+.finish-game-button {
+  width: 60px;
 }
 
 .game-explanation {

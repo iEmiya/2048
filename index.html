@@ -24,8 +24,9 @@
     </div>
 
     <div class="above-game">
-      <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
-      <a class="restart-button">New Game</a>
+      <a class="restart-button disabled-when-playing">New Game</a>
+      <a class="finish-game-button">Play</a>
+      <a class="next-move-button disabled-when-playing">Next Move</a>
     </div>
 
     <div class="game-container">
@@ -74,11 +75,10 @@
     </p>
     <hr>
     <p>
-    <strong class="important">Note:</strong> This site is the official version of 2048. You can play it on your phone via <a href="http://git.io/2048">http://git.io/2048.</a> All other apps or sites are derivatives or fakes, and should be used with caution.
-    </p>
+      <strong class="important">Creating an AI:</strong> Edit <strong>ai.js</strong>. Press <strong>Next Move</strong> to have your AI make a single move and <strong>Play</strong> to start your AI finishing the game. Once playing, you can press <strong>Stop</strong> to stop the AI from playing.
     <hr>
     <p>
-    Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
+    2014 created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a> Hacked to allow for AIs by <a href="http://jscott.me">Jonathan Scott</a> for <a href="https://www.facebook.com/groups/SouthamptonCodeDojo/">Southampton Code Dojo</a>.
     </p>
   </div>
 
@@ -90,6 +90,7 @@
   <script src="js/grid.js"></script>
   <script src="js/tile.js"></script>
   <script src="js/local_storage_manager.js"></script>
+  <script src="ai.js"></script>
   <script src="js/game_manager.js"></script>
   <script src="js/application.js"></script>
 </body>

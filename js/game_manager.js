@@ -6,19 +6,44 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 
   this.startTiles     = 2;
 
-  this.inputManager.on("move", this.move.bind(this));
+  this.inputManager.on("move", this.moveFromInput.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.inputManager.on("nextMove", this.nextMove.bind(this));
+  this.inputManager.on("finishGame", this.finishGame.bind(this));
 
   this.setup();
 }
 
 // Restart the game
 GameManager.prototype.restart = function () {
-  this.storageManager.clearGameState();
-  this.actuator.continueGame(); // Clear the game won/lost message
-  this.setup();
+  if (!this.is_playing) {
+    this.storageManager.clearGameState();
+    this.actuator.continueGame(); // Clear the game won/lost message
+    this.setup();
+  }
 };
+
+GameManager.prototype.nextMove = function(override) {
+  if (!this.is_playing || override) {
+    this.move(this.ai.move(this.grid.serialize().cells));
+  }
+}
+
+GameManager.prototype.finishGame = function(force) {
+  var button = document.querySelector('.finish-game-button');
+  if (button.innerHTML == "Pause" || force) {
+    this.is_playing = false;
+    button.innerHTML = "Play";
+    document.getElementsByTagName("body")[0].className = "";
+  } else {
+    this.ai = new AI(this.grid.serialize().cells);
+    button.innerHTML = "Pause";
+    this.is_playing = true;
+    this.nextMove(true);
+    document.getElementsByTagName("body")[0].className = "playing";
+  }
+}
 
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
@@ -57,6 +82,9 @@ GameManager.prototype.setup = function () {
     // Add the initial tiles
     this.addStartTiles();
   }
+
+  this.finishGame(true);
+  this.ai = new AI(this.grid.serialize().cells);
 
   // Update the actuator
   this.actuate();
@@ -130,6 +158,12 @@ GameManager.prototype.moveTile = function (tile, cell) {
   tile.updatePosition(cell);
 };
 
+GameManager.prototype.moveFromInput = function (direction) {
+  if (!this.is_playing) {
+    this.move(direction);
+  }
+}
+
 // Move tiles on the grid in the specified direction
 GameManager.prototype.move = function (direction) {
   // 0: up, 1: right, 2: down, 3: left
@@ -187,10 +221,19 @@ GameManager.prototype.move = function (direction) {
     this.addRandomTile();
 
     if (!this.movesAvailable()) {
+      this.finishGame(true);
       this.over = true; // Game over!
     }
 
+    var self = this;
+
     this.actuate();
+  }
+
+  if (this.is_playing) {
+    setTimeout(function() {
+      self.nextMove(true);
+    }, 100);
   }
 };
 
