@@ -26,7 +26,7 @@ GameManager.prototype.restart = function () {
 
 GameManager.prototype.nextMove = function(override) {
   if (!this.is_playing || override) {
-    this.move(this.ai.move(this.grid.serialize().cells));
+    this.move(this.ai.move(this.grid.clean_serialize()));
   }
 }
 
